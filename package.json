@@ -1,0 +1,38 @@
+{
+    "config": {
+        "db": {
+            "name": "dev-postgres",
+            "user": "dev",
+            "password": "development",
+            "port": "5432",
+            "dbName": "data"
+        }
+    },
+    "scripts": {
+        "dev": "export NODE_ENV=development && dotenv -e .env.development -- tsc-watch --onSuccess \"node ./dist/index.js \"",
+        "dev:db:create": "docker run --name ${npm_package_config_db_name} -e POSTGRES_PASSWORD=${npm_package_config_db_password} -e POSTGRES_USER=${npm_package_config_db_user} -e POSTGRES_DB=${npm_package_config_db_dbName} -p ${npm_package_config_db_port}:5432 -d postgres",
+        "dev:db:connect": "psql postgresql://${npm_package_config_db_user}:${npm_package_config_db_password}@127.0.0.1:${npm_package_config_db_port}/${npm_package_config_db_dbName}",
+        "dev:db:drop": "docker stop ${npm_package_config_db_name} && docker rm ${npm_package_config_db_name}",
+        "dev:db:migrate": "dotenv -e .env.development -- yarn prisma migrate dev",
+        "dev:db:reset": "dotenv -e .env.development -- yarn prisma migrate reset"
+    },
+    "devDependencies": {
+        "@types/express": "4.17.15",
+        "@types/node": "18.11.18",
+        "@typescript-eslint/eslint-plugin": "5.48.2",
+        "@typescript-eslint/parser": "5.48.2",
+        "eslint": "8.32.0",
+        "eslint-config-prettier": "8.6.0",
+        "eslint-plugin-prettier": "4.2.1",
+        "prettier": "2.8.3",
+        "prisma": "4.8.1",
+        "tsc-watch": "6.0.0",
+        "typescript": "4.9.4"
+    },
+    "dependencies": {
+        "@prisma/client": "4.8.1",
+        "dotenv": "16.0.3",
+        "express": "4.18.2"
+    },
+    "license": "MIT"
+}
