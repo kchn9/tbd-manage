@@ -11,9 +11,9 @@ function errorHandler(): ErrorRequestHandler {
     ) => {
         error(err.message);
 
-        if (err.status === 400) {
+        if (err.status === 404) {
             return res.json({
-                message: "Bad request",
+                message: err.message,
             });
         }
 

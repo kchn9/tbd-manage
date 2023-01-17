@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import express, { Express } from "express";
 import Controller from "./interfaces/controller.interface";
 import { info, error } from "./utils/logger";
+import dbClient from "./utils/prismaClient";
 import { requestLogger } from "./middleware/requestLogger.middleware";
 import { errorHandler } from "./middleware/errorHandler.middleware";
 import helmet from "helmet";
@@ -22,9 +22,8 @@ class App {
     }
 
     private async connectDatabase() {
-        const client = new PrismaClient();
         try {
-            await client.$connect();
+            await dbClient.$connect();
             info("Database connected!");
         } catch (e) {
             error("Error occured - unable to connect to db!");
