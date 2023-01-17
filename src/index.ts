@@ -1,5 +1,10 @@
 import * as dotenv from "dotenv";
+import config from "config";
+import App from "./app";
+
 dotenv.config();
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+const { port } = config.get<{ port: number }>("server");
+const app = new App(port, []);
+
+app.listen();

@@ -9,16 +9,22 @@
         }
     },
     "scripts": {
-        "dev": "export NODE_ENV=development && dotenv -e .env.development -- tsc-watch --onSuccess \"node ./dist/index.js \"",
+        "dev": "export NODE_ENV=development && dotenv -e .env.development -- tsc-watch --onSuccess \"node ./dist/src/index.js \"",
         "dev:db:create": "docker run --name ${npm_package_config_db_name} -e POSTGRES_PASSWORD=${npm_package_config_db_password} -e POSTGRES_USER=${npm_package_config_db_user} -e POSTGRES_DB=${npm_package_config_db_dbName} -p ${npm_package_config_db_port}:5432 -d postgres",
         "dev:db:connect": "psql postgresql://${npm_package_config_db_user}:${npm_package_config_db_password}@127.0.0.1:${npm_package_config_db_port}/${npm_package_config_db_dbName}",
         "dev:db:drop": "docker stop ${npm_package_config_db_name} && docker rm ${npm_package_config_db_name}",
         "dev:db:migrate": "dotenv -e .env.development -- yarn prisma migrate dev",
+        "dev:db:generate": "dotenv -e .env.development -- yarn prisma generate",
         "dev:db:reset": "dotenv -e .env.development -- yarn prisma migrate reset"
     },
     "devDependencies": {
+        "@types/compression": "1.7.2",
+        "@types/config": "3.3.0",
+        "@types/cors": "2.8.13",
         "@types/express": "4.17.15",
+        "@types/morgan": "1.9.4",
         "@types/node": "18.11.18",
+        "@types/npmlog": "4.1.4",
         "@typescript-eslint/eslint-plugin": "5.48.2",
         "@typescript-eslint/parser": "5.48.2",
         "eslint": "8.32.0",
@@ -26,13 +32,21 @@
         "eslint-plugin-prettier": "4.2.1",
         "prettier": "2.8.3",
         "prisma": "4.8.1",
+        "ts-node": "10.9.1",
         "tsc-watch": "6.0.0",
         "typescript": "4.9.4"
     },
     "dependencies": {
         "@prisma/client": "4.8.1",
+        "compression": "1.7.4",
+        "config": "3.3.8",
+        "cors": "2.8.5",
+        "dayjs": "1.11.7",
         "dotenv": "16.0.3",
-        "express": "4.18.2"
+        "express": "4.18.2",
+        "helmet": "6.0.1",
+        "morgan": "1.10.0",
+        "npmlog": "7.0.1"
     },
     "license": "MIT"
 }
